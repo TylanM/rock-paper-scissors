@@ -46,18 +46,29 @@ function playerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    roundCount++;
-    console.log(`Round ${roundCount} is beginning, prepare your selection!`)
-    playerPlay();
+    let playerWon = false
     
     if (playerSelection == computerSelection) {
-        return `It is a draw! ${playerSelection} and ${computerSelection} have equal power!`;
+        return console.log(`It is a draw! ${playerSelection} and ${computerSelection} have equal power!`);
     }
+    else {
+        playerWon = (playerSelection == "rock") && (computerSelection == "scissors") ? true :
+            (playerSelection == "paper") && (computerSelection == "rock") ? true :
+            (playerSelection == "scissors") && (computerSelection == "paper") ? true : false;
+    }
+
+    let roundOutCome = playerWon ? `You win! ${playerSelection} beats ${computerSelection}` :
+        `You lose! ${playerSelection} beats ${computerSelection}`;
+
+    console.log(roundOutCome);
+        
     
 }
 
 let running = true;
 
 while (running){
-    playRound(playerPlay,computerPlay);
+    roundCount++;
+    console.log(`Round ${roundCount} is beginning, prepare your selection!`)
+    playRound(playerPlay(),computerPlay());
 }

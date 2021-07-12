@@ -18,8 +18,9 @@ console.log("Welcome to the console, let us play some rock-paper-scissors!");
 
 //repeat... 
 
-let roundCount = 0;
+
 const choices = ["rock", "paper", "scissors"];
+const outComes = ["won","lost","draw"];
 
 function computerPlay() {
     let randomChoice = choices[Math.floor(Math.random()*choices.length)];
@@ -46,10 +47,13 @@ function playerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    let playerWon = false
+    let playerWon = false;
+    let result;
     
     if (playerSelection == computerSelection) {
-        return console.log(`It is a draw! ${playerSelection} and ${computerSelection} have equal power!`);
+        console.log(`It is a draw! ${playerSelection} and ${computerSelection} have equal power!`);
+        result = outComes[2];
+        return result;
     }
     else {
         playerWon = (playerSelection == "rock") && (computerSelection == "scissors") ? true :
@@ -61,14 +65,48 @@ function playRound(playerSelection, computerSelection) {
         `You lose! ${playerSelection} beats ${computerSelection}`;
 
     console.log(roundOutCome);
+
+    result = playerWon ? outComes[0]: outComes[1];
+    return result;
         
+    
+}
+
+function game() {
+    let roundTotal = 5;
+    let playerWins = 0;
+    let playerDefeats = 0;
+    let draws = 0;
+    
+    console.log(`Starting a new game...`)
+    
+    for (let round = 1; round <= roundTotal; round++ ){
+        console.log(`Round ${round} is beginning, prepare your selection!`)
+        
+        result = playRound(playerPlay(),computerPlay());
+        if (result == outComes[0]){
+            playerWins++;
+        } else if (result == outComes[2]){
+            draws++;
+        } else {
+            playerDefeats++;
+        }
+    }
+
+    if (playerWins > playerDefeats){
+        console.log("You won the game!");
+    } else if (playerWins == playerDefeats){
+        console.log("The game was a draw!");
+    } else {
+        console.log("You lost the game, better luck next time!");
+    }
+
+    console.log(`SCOREBOARD: | Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`);
     
 }
 
 let running = true;
 
 while (running){
-    roundCount++;
-    console.log(`Round ${roundCount} is beginning, prepare your selection!`)
-    playRound(playerPlay(),computerPlay());
+    game();
 }

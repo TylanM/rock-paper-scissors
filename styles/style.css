@@ -11,12 +11,18 @@ body {
     width: 8rem;
     height: 8rem;
     text-align: center;
-    color: white;
     background: rgba(238, 235, 235, 0.8);
     text-shadow: 0 0 .5rem black;
   }
 
-  .button:hover {
-    color: rgba(255, 255, 255, 1);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.7);
-  }
+.button:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgb(250, 174, 59);
+  border-color: rgb(250, 174, 59);
+  transform: scale(1.1);
+}
+
+.scoreboard {
+  border: .2rem solid black;
+}
+

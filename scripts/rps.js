@@ -1,23 +1,6 @@
+//Witten by github.com/TylanM as a part of "The Odin Project" curriculum
+
 console.log("Welcome to the console, let us play some rock-paper-scissors!");
-
-//Initial algorithm
-
-//Init round count variable and start new round
-//Ask player if they choose rock, paper or scissors
-//Store user input in variable
-//Allow the computer to randomly pick one of the choices and store result
-//compare user vs cpu choice and determine outcome
-
-//Rock beats scissors
-//Paper beats rock
-//Scissors beat paper
-
-
-//Declare outcome and print scoreboard
-//Begin another around
-
-//repeat... 
-
 
 const choices = ["rock", "paper", "scissors"];
 const outComes = ["won","lost","draw"];
@@ -111,6 +94,31 @@ function gameUi() {
     }
     running = false;
 }
+
+function updateScoreUi() {
+    console.log("PLACEHOLDER SCORE!")
+}
+
+// buttons is a node list. It looks and acts much like an array.
+const buttons = document.querySelectorAll('button');
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+
+  // and for each one we add a 'click' listener
+  button.addEventListener('click', () => {
+    if(button.id == "rock") {
+        alert("I found a rock!");
+    } else if (button.id == "paper") {
+        alert("I found a piece of paper!");
+    } else if (button.id == "scissors") {
+        alert("I found a pair of scissors!");
+    }
+    
+  });
+});
+
+
 
 let running = true;
 

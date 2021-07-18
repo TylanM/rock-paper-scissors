@@ -105,8 +105,15 @@ function game() {
     
 }
 
+function gameUi() {
+    for (let i = 0; i < 5; i++) {
+        console.log("HEllo WORLD!");
+    }
+    running = false;
+}
+
 let running = true;
 
 while (running){
-    game();
+    gameUi();
 }

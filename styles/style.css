@@ -1,0 +1,22 @@
+body {
+  background-color: rgb(138, 222, 236);
+}
+
+.button {
+    border: .2rem solid black;
+    border-radius: .5rem;
+    margin: 1rem;
+    font-size: 4.5rem;
+    padding: 1rem .5rem;
+    width: 8rem;
+    height: 8rem;
+    text-align: center;
+    color: white;
+    background: rgba(238, 235, 235, 0.8);
+    text-shadow: 0 0 .5rem black;
+  }
+
+  .button:hover {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.7);
+  }

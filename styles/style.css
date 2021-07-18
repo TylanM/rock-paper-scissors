@@ -2,6 +2,26 @@ body {
   background-color: rgb(138, 222, 236);
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  margin-left: 50px;
+}
+
+h5 {
+  padding: 0;
+  margin: 0;
+}
+
 .button {
     border: .2rem solid black;
     border-radius: .5rem;
@@ -13,6 +33,7 @@ body {
     text-align: center;
     background: rgba(238, 235, 235, 0.8);
     text-shadow: 0 0 .5rem black;
+
   }
 
 .button:hover {
@@ -21,6 +42,15 @@ body {
   border-color: rgb(250, 174, 59);
   transform: scale(1.1);
 }
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+}
+
 
 .scoreboard {
   border: .2rem solid black;

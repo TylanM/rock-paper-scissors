@@ -89,10 +89,35 @@ function game() {
 }
 
 function gameUi() {
-    for (let i = 0; i < 5; i++) {
-        console.log("HEllo WORLD!");
+    let roundTotal = 5;
+    let playerWins = 0;
+    let playerDefeats = 0;
+    let draws = 0;
+    
+    console.log(`Starting a new game...`)
+    
+    for (let round = 1; round <= roundTotal; round++ ){
+        console.log(`Round ${round} is beginning, prepare your selection!`)
+        
+        result = playRound(playerPlay(),computerPlay());
+        if (result == outComes[0]){
+            playerWins++;
+        } else if (result == outComes[2]){
+            draws++;
+        } else {
+            playerDefeats++;
+        }
     }
-    running = false;
+
+    if (playerWins > playerDefeats){
+        console.log("You won the game!");
+    } else if (playerWins == playerDefeats){
+        console.log("The game was a draw!");
+    } else {
+        console.log("You lost the game, better luck next time!");
+    }
+
+    console.log(`SCOREBOARD: | Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`);
 }
 
 function updateScoreUi() {
@@ -101,6 +126,7 @@ function updateScoreUi() {
 
 // buttons is a node list. It looks and acts much like an array.
 const buttons = document.querySelectorAll('button');
+const log = document.querySelector('#log')
 
 // we use the .forEach method to iterate through each button
 buttons.forEach((button) => {
@@ -108,11 +134,23 @@ buttons.forEach((button) => {
   // and for each one we add a 'click' listener
   button.addEventListener('click', () => {
     if(button.id == "rock") {
-        alert("I found a rock!");
+        const contentp = document.createElement('p');
+        //contentp.classList.add('content');
+        contentp.textContent = 'Player selected rock!';
+        contentp.style.color = 'green';
+        log.prepend(contentp);
     } else if (button.id == "paper") {
-        alert("I found a piece of paper!");
+        const contentp = document.createElement('p');
+        //contentp.classList.add('content');
+        contentp.textContent = 'Player selected paper!';
+        contentp.style.color = 'green';
+        log.prepend(contentp);
     } else if (button.id == "scissors") {
         alert("I found a pair of scissors!");
+    }
+
+    while (log.childNodes.length > 5) {
+        log.removeChild(log.lastChild)
     }
     
   });
@@ -120,8 +158,3 @@ buttons.forEach((button) => {
 
 
 
-let running = true;
-
-while (running){
-    gameUi();
-}

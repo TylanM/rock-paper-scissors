@@ -1,40 +1,48 @@
 //Witten by github.com/TylanM as a part of "The Odin Project" curriculum
 
-console.log("Welcome to the console, let us play some rock-paper-scissors!");
-
 const choices = ["rock", "paper", "scissors"];
 const outComes = ["won","lost","draw"];
 
 function computerPlay() {
     let randomChoice = choices[Math.floor(Math.random()*choices.length)];
+    addToLog(`CPU chose ${randomChoice}`, "yellow");
     return randomChoice;
 }
 
-function playerPlay() {
-    playerSelecting = true;
-    let result;
+function playerPlayUi(weapon) {
+    selection = weapon.target.id;
 
-    while (playerSelecting) {
-        let input = prompt(`Select your weapon! Do you choose ${"rock"}, ${"paper"} or ${"scissors"}?`);
-        input = input.toLowerCase();
-        playerSelecting = choices.includes(input) ? false : true; 
-        
-        if (playerSelecting){ 
-            console.log(`Your selection must have been typed incorrectly. Please try again.`);
-        }        
-        result = input;
+    if(selection == "rock") {
+        addToLog("Player selected rock!")
+    } else if (selection == "paper") {
+        addToLog("Player selected paper!")
+    } else if (selection == "scissors") {
+        addToLog("Player selected scissors!");
     }
 
-    return result;
- 
+    if (log.childNodes.length > 5) {
+        log.removeChild(log.lastChild)
+    }
+
+    
+
+    let result = playRound(selection,computerPlay());
+    updateScore(result);
+    if (rounds == 0) {
+    addToLog(`Round 5 Summary`, "black" );
+    } else {
+        addToLog(`Round ${rounds} Summary`, "black" )
+    }
 }
 
 function playRound(playerSelection, computerSelection) {
     let playerWon = false;
     let result;
-    
+
+    //alert("RUNNING");
+
     if (playerSelection == computerSelection) {
-        console.log(`It is a draw! ${playerSelection} and ${computerSelection} have equal power!`);
+        addToLog(`It is a draw! ${playerSelection} and ${computerSelection} have equal power!`);
         result = outComes[2];
         return result;
     }
@@ -47,7 +55,7 @@ function playRound(playerSelection, computerSelection) {
     let roundOutCome = playerWon ? `You win! ${playerSelection} beats ${computerSelection}` :
         `You lose! ${playerSelection} beats ${computerSelection}`;
 
-    console.log(roundOutCome);
+    addToLog(roundOutCome,"orange");
 
     result = playerWon ? outComes[0]: outComes[1];
     return result;
@@ -55,106 +63,67 @@ function playRound(playerSelection, computerSelection) {
     
 }
 
-function game() {
-    let roundTotal = 5;
-    let playerWins = 0;
-    let playerDefeats = 0;
-    let draws = 0;
-    
-    console.log(`Starting a new game...`)
-    
-    for (let round = 1; round <= roundTotal; round++ ){
-        console.log(`Round ${round} is beginning, prepare your selection!`)
-        
-        result = playRound(playerPlay(),computerPlay());
-        if (result == outComes[0]){
-            playerWins++;
-        } else if (result == outComes[2]){
-            draws++;
-        } else {
-            playerDefeats++;
-        }
-    }
+function updateScore(result) {
 
-    if (playerWins > playerDefeats){
-        console.log("You won the game!");
-    } else if (playerWins == playerDefeats){
-        console.log("The game was a draw!");
+    if (result == outComes[0]){
+        playerWins++;
+    } else if (result == outComes[2]){
+        draws++;
     } else {
-        console.log("You lost the game, better luck next time!");
+        playerDefeats++;
     }
 
-    console.log(`SCOREBOARD: | Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`);
-    
-}
+    rounds++;
+    scoreboard.textContent = `| Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`;
 
-function gameUi() {
-    let roundTotal = 5;
-    let playerWins = 0;
-    let playerDefeats = 0;
-    let draws = 0;
-    
-    console.log(`Starting a new game...`)
-    
-    for (let round = 1; round <= roundTotal; round++ ){
-        console.log(`Round ${round} is beginning, prepare your selection!`)
-        
-        result = playRound(playerPlay(),computerPlay());
-        if (result == outComes[0]){
-            playerWins++;
-        } else if (result == outComes[2]){
-            draws++;
+    if(playerWins + playerDefeats + draws == roundTotal) {
+        if (playerWins > playerDefeats){
+            addToLog("You won the game!");
+        } else if (playerWins == playerDefeats) {
+            addToLog("The game was a draw!");
         } else {
-            playerDefeats++;
+            addToLog("You lost the game, better luck next time!", "red")
         }
-    }
-
-    if (playerWins > playerDefeats){
-        console.log("You won the game!");
-    } else if (playerWins == playerDefeats){
-        console.log("The game was a draw!");
-    } else {
-        console.log("You lost the game, better luck next time!");
-    }
-
-    console.log(`SCOREBOARD: | Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`);
+    
+        scoreboard.textContent = `SCOREBOARD: | Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`;
+        startNewGame();
+    } 
 }
 
-function updateScoreUi() {
-    console.log("PLACEHOLDER SCORE!")
+function addToLog(text,color){
+    defaultColor = "green"
+    color = (typeof color === 'undefined') ? defaultColor : color;
+    const contentp = document.createElement('p');
+    //contentp.classList.add('content');
+    contentp.textContent = text;
+    contentp.style.color = color;
+    log.prepend(contentp);
 }
 
-// buttons is a node list. It looks and acts much like an array.
+function startNewGame() {
+    addToLog(`Starting a new game...`, "orange")
+    scoreboard.textContent = `| Wins: ${playerWins} | Defeats: ${playerDefeats} | Draws: ${draws} |`;
+    playerWins = 0;
+    playerDefeats = 0;
+    draws = 0;
+    rounds = 0;
+}
+
+console.log("Welcome to the console, let us play some rock-paper-scissors!");
+
 const buttons = document.querySelectorAll('button');
 const log = document.querySelector('#log')
-
-// we use the .forEach method to iterate through each button
-buttons.forEach((button) => {
-
-  // and for each one we add a 'click' listener
-  button.addEventListener('click', () => {
-    if(button.id == "rock") {
-        const contentp = document.createElement('p');
-        //contentp.classList.add('content');
-        contentp.textContent = 'Player selected rock!';
-        contentp.style.color = 'green';
-        log.prepend(contentp);
-    } else if (button.id == "paper") {
-        const contentp = document.createElement('p');
-        //contentp.classList.add('content');
-        contentp.textContent = 'Player selected paper!';
-        contentp.style.color = 'green';
-        log.prepend(contentp);
-    } else if (button.id == "scissors") {
-        alert("I found a pair of scissors!");
-    }
-
-    while (log.childNodes.length > 5) {
-        log.removeChild(log.lastChild)
-    }
-    
-  });
-});
+const scoreboard = document.querySelector('#scoreboard')
 
 
+buttons.forEach(button => button.addEventListener('click',playerPlayUi));
+
+
+const roundTotal = 5;
+let playerWins = 0;
+let playerDefeats = 0;
+let draws = 0;
+let rounds = 0;
+
+startNewGame();
 
